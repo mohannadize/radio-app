@@ -1,4 +1,4 @@
-const cacheStore = "Radio-PWA-1.0.1";
+const cacheStore = "Radio-PWA-1.0.2";
 self.addEventListener("install", (e) => {
     e.waitUntil(
         caches.open(cacheStore).then((cache) => {
