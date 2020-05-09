@@ -72,16 +72,7 @@ function set_station(elem, url, name) {
     [].slice.apply(list).forEach(station => station.classList.remove('is-active'));
     elem.classList.add("is-active");
     audio.src = url;
-    fetch(url, { method: "HEAD" }).then(res => {
-        let type = res.headers.get("content-type");
-        if (audio.canPlayType(type)) {
-            audio.src = url;
-            player("play");
-        } else {
-            player("stop");
-            alert("This station cannot be played")
-        }
-    })
+    player("play");
 }
 
 function player(options) {
