@@ -79,8 +79,10 @@ function player(options) {
     if (typeof options == 'string') {
         if (options == 'play') {
             audio.play();
-            player_icon.classList.remove("fa-play")
-            player_icon.classList.add("fa-pause")
+            player_icon.innerHTML = '<i class="fa fa-pause"></i>';
+            player_icon.onclick = () => {
+                player("pause");
+            }
             return;
         } else if (options == 'stop') {
             player_station.innerText = 'Select a station';
@@ -88,6 +90,10 @@ function player(options) {
         } else if (options == 'pause') {
             audio.pause();
         }
+        player_icon.onclick = () => {
+            player("play");
+        }
+        player_icon.innerHTML = '<i class="fa fa-play"></i>';
         player_icon.classList.add("fa-play")
         player_icon.classList.remove("fa-pause")
         return;
