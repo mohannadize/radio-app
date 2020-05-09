@@ -1,7 +1,7 @@
 const string = `
 stream_data[0]: "http://64.150.176.192:8276/; |90s FM|Various|FM|128|1"
  stream_data[1]: "http://64.150.176.192:8276|90s FM Arabic|Various|FM|128|1"
- stream_data[2]: "https://live.alhayafm.com:8000/;?1529541324751|Al Hayat FM |Various|FM|128|1"
+ stream_data[2]: "http://live.alhayafm.com:8000/;?1529541324751|Al Hayat FM |Various|FM|128|1"
  stream_data[3]: "http://listen.radionomy.com:80/ArabDJ |Arab DJ|Various|FM|128|1"
  stream_data[4]: "http://9090streaming.mobtada.com/9090FMEGYPT|Egypt - 9090 Egypt|Music|AR|128|1"
  stream_data[5]: "http://64.150.176.192:8276/;|Egypt - 90s FM|90s|AR|128|1"
@@ -72,7 +72,16 @@ function set_station(elem, url, name) {
     [].slice.apply(list).forEach(station => station.classList.remove('is-active'));
     elem.classList.add("is-active");
     audio.src = url;
-    player('play');
+    fetch(url, { method: "HEAD" }).then(res => {
+        let type = res.headers.get("content-type");
+        if (audio.canPlayType(type)) {
+            audio.src = url;
+            player("play");
+        } else {
+            player("stop");
+            alert("This station cannot be played")
+        }
+    })
 }
 
 function player(options) {
