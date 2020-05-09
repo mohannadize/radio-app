@@ -1,0 +1,22 @@
+doctype
+html(lang="en")
+    include head
+    body
+        include header
+        .section
+            .container
+                .columns
+                    .column.is-6.is-offset-3
+                        #stations_container.menu
+                            .menu-label Stations
+                            .menu-list
+                                ul
+                br
+                br
+                //- .has-text-centered
+                    .button.is-dark
+                        span.icon
+                            i.fa.fa-upload
+                        span Add .SII File
+        include player
+        script(src="js/main.js")

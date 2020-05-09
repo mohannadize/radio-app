@@ -1,0 +1,24 @@
+{
+    "name": "radio-app",
+    "version": "1.0.0",
+    "description": "A radio app that runs in the browser\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[DPWA\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[C\u001b[D",
+    "main": "index.js",
+    "scripts": {
+        "start": "node index.js",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/mohannadize/radio-app.git"
+    },
+    "author": "Mohanad Hesham",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/mohannadize/radio-app/issues"
+    },
+    "homepage": "https://github.com/mohannadize/radio-app#readme",
+    "dependencies": {
+        "express": "^4.17.1",
+        "pug": "^2.0.4"
+    }
+}

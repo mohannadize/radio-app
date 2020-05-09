@@ -1,0 +1,41 @@
+#player {
+    position: fixed;
+    bottom: 0;
+    width: 100vw;
+    display: flex;
+    justify-content: center;
+}
+
+#stations_container {
+    height: 100vh;
+}
+
+#player>.navbar {
+    --player-width: 800px;
+    box-shadow: 0 0 30px rgba(0, 0, 0, .15);
+    display: flex;
+    width: var(--player-width);
+    /* padding-right: 2em; */
+    align-items: stretch;
+}
+
+#player>.navbar>* {
+    display: flex;
+    align-items: stretch;
+    justify-content: flex-start;
+}
+
+#player>.navbar>*>* {
+    display: flex;
+    align-items: center;
+}
+
+#player>.navbar>.navbar-end {
+    justify-content: flex-end;
+    margin-left: auto
+}
+
+.player-buttons {
+    padding-left: 1em;
+    padding-right: 1em;
+}
