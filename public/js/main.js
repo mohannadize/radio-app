@@ -1,7 +1,7 @@
 const string = `
 stream_data[0]: "http://64.150.176.192:8276/; |90s FM|Various|FM|128|1"
  stream_data[1]: "http://64.150.176.192:8276|90s FM Arabic|Various|FM|128|1"
- stream_data[2]: "http://live.alhayafm.com:8000/;?1529541324751|Al Hayat FM |Various|FM|128|1"
+ stream_data[2]: "https://live.alhayafm.com:8000/;?1529541324751|Al Hayat FM |Various|FM|128|1"
  stream_data[3]: "http://listen.radionomy.com:80/ArabDJ |Arab DJ|Various|FM|128|1"
  stream_data[4]: "http://9090streaming.mobtada.com/9090FMEGYPT|Egypt - 9090 Egypt|Music|AR|128|1"
  stream_data[5]: "http://64.150.176.192:8276/;|Egypt - 90s FM|90s|AR|128|1"
@@ -50,7 +50,7 @@ function populate_main() {
         html += `
         <li>
             <a onclick="set_station(this,'${station.url}','${station.name}')">
-                <div class="level">
+                <div class="level is-mobile">
                     <div class="level-left">
                         <div class='level-item has-text-weight-bold'>${station.name}</div>
                     </div>
