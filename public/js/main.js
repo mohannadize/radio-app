@@ -84,9 +84,6 @@ function set_station(elem, url, name, i) {
                 set_station(null, stations[i+1].url, stations[i+1].name, i+1);
             });
         }
-        navigator.mediaSession.setActionHandler('stop', function () {
-            player('stop')
-        });
     }
 
     player("play");
