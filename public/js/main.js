@@ -1,24 +1,7 @@
 const string = `
 stream_data[0]: "https://ice311.securenetsystems.net/NOGOUM |Nogoum FM|Various|FM|128|1"
-stream_data[0]: "http://64.150.176.192:8276/; |90s FM|Various|FM|128|1"
- stream_data[1]: "http://64.150.176.192:8276|90s FM Arabic|Various|FM|128|1"
- stream_data[2]: "http://live.alhayafm.com:8000/;?1529541324751|Al Hayat FM |Various|FM|128|1"
  stream_data[3]: "http://listen.radionomy.com:80/ArabDJ |Arab DJ|Various|FM|128|1"
  stream_data[4]: "http://9090streaming.mobtada.com/9090FMEGYPT|Egypt - 9090 Egypt|Music|AR|128|1"
- stream_data[5]: "http://64.150.176.192:8276/;|Egypt - 90s FM|90s|AR|128|1"
- stream_data[6]: "http://82.201.132.237:8000/;|Egypt - JonaFm|Talk|AR|128|1"
- stream_data[7]: "http://live.radiomasr.net:8060/RADIOMASR|Egypt - Radio Egypt|Talk|AR|128|1"
- stream_data[8]: "http://serv02.streamsfortheworld.com:8000/radiosotak_hi|Egypt - Soutak|pop|AR|128|1"
- stream_data[9]: "http://192.99.17.12:4986/stream|Fioz Syria FM 91.1|Various|AR|128|1"
- stream_data[10]: "http://s2.voscast.com:11376/;|Mix FM 105.5 - Jeddah|Various|AR|128|1"
- stream_data[11]: "http://5.34.160.146:8000/live|Nas FM - Jenin|Various|AR|128|1"
- stream_data[12]: "http://curiosity.shoutca.st:6035/stream|Rotana FM 88.0 - Jeddah|Various|AR|128|1"
- stream_data[13]: "http://philae.shoutca.st:8114/;|Rotana FM KSA|Various|AR|128|1"
- stream_data[14]: "http://178.32.62.172:8614/;stream.nsv|Rotana FM LB Beirut|Various|AR|128|1"
- stream_data[15]: "http://elie91.primcast.com:7992/;stream.nsv|Sawt El Noujoum Beirut|Various|AR|128|1"
- stream_data[16]: "http://radio.mosaiquefm.net:8000/mosatarab|Tunisia - Mosaique FM Tarab|Various|AR|128|1"
- stream_data[17]: "http://audiostreaming.itworkscdn.com:9000/;|Virgin Radio Lebanon|Various|FM|128|1"
- stream_data[18]: "http://37.187.79.93:8192/;stream.nsv|lbi lebanon|Various|AR|128|1"
 `;
 
 let audio = new Audio();
@@ -47,10 +30,10 @@ function parse_sii(string) {
 function populate_main() {
     let list = stations_container.querySelector('ul');
     let html = ``;
-    stations.forEach(station => {
+    stations.forEach((station, i) => {
         html += `
         <li>
-            <a onclick="set_station(this,'${station.url}','${station.name}')">
+            <a id='station-${i}' class='station' onclick="set_station(this,'${station.url}','${station.name}','${i}')">
                 <div class="level is-mobile">
                     <div class="level-left">
                         <div class='level-item has-text-weight-bold'>${station.name}</div>
@@ -67,12 +50,45 @@ function populate_main() {
     list.innerHTML = (html);
 };
 
-function set_station(elem, url, name) {
+function set_station(elem, url, name, i) {
+    if (!elem) {
+        elem = document.getElementById('station-'+i);
+    }
     let list = stations_container.querySelectorAll('ul > li > a');
     player_station.innerText = name;
     [].slice.apply(list).forEach(station => station.classList.remove('is-active'));
     elem.classList.add("is-active");
     audio.src = url;
+    let pageTitle = document.getElementsByTagName("title");
+    pageTitle[0].innerText = name;
+
+    if ('mediaSession' in navigator) {
+
+        navigator.mediaSession.metadata = new MediaMetadata({
+            title: name,
+        });
+
+        navigator.mediaSession.setActionHandler('play', function () {
+            player('play')
+        });
+        navigator.mediaSession.setActionHandler('pause', function () {
+            player('pause')
+        });
+        if (stations[i-1]) {
+            navigator.mediaSession.setActionHandler('previoustrack', function () {
+                set_station(null, stations[i-1].url, stations[i-1].name, i-1);
+            });
+        }
+        if (stations[i+1]) {
+            navigator.mediaSession.setActionHandler('nexttrack', function () {
+                set_station(null, stations[i+1].url, stations[i+1].name, i+1);
+            });
+        }
+        navigator.mediaSession.setActionHandler('stop', function () {
+            player('stop')
+        });
+    }
+
     player("play");
 }
 
@@ -88,6 +104,12 @@ function player(options) {
         } else if (options == 'stop') {
             player_station.innerText = 'Select a station';
             audio.src = '';
+            let pageTitle = document.getElementsByTagName("title");
+            pageTitle[0].innerText = 'Radio PWA';
+            let elems = document.querySelectorAll('.station');
+            [...elems].forEach(elem=>{
+                elem.classList.remove('is-active')
+            })
         } else if (options == 'pause') {
             audio.pause();
         }
